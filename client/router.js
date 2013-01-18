@@ -3,6 +3,11 @@ Meteor.Router.add({
     "/characters": "characters",
     "/characters/:id": function(id) {
         Session.set("characterId", id);
+        var char = Characters.findOne({"nome": Session.get("characterId")});
+        if (!char) {
+            return "character404";
+        }
+        Session.set("character", char);
         return "character";
     }
 });

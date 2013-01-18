@@ -1,0 +1,23 @@
+<template name="characters">
+<h1>Personaggi</h1>
+{{#if anyCharacters}}
+<ul>
+{{#each characters}}
+<li><a href="/characters/{{nome}}">{{nome}}</a> {{ownerName owner}}</li>
+{{/each}}
+<ul>
+{{else}}
+Nessun personaggio trovato.
+{{/if}}
+</template>
+
+<template name="character404">
+<h1>{{character}}</h1>
+<strong>Personaggio non trovato</strong>
+</template>
+
+<template name="character">
+    {{#with character}}
+    <h1>{{nome}}</h1>
+    {{/with}}
+</template>

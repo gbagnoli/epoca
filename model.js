@@ -1,5 +1,7 @@
 // Users
 
+Characters = new Meteor.Collection('characters');
+
 var displayName = function (user) {
   if (user.profile && user.profile.name)
     return user.profile.name;
