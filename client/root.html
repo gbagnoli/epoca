@@ -1,6 +1,8 @@
 <template name="root">
-<h1>Hello {{currentUser}}</h1>
-  {{greeting}}
-  <button class="btn"><i class="icon-heart"></i> Click Me</button>
+{{#if isLoggedIn}}
+Logged in
+{{else}}
+Please Login.
+{{/if}}
 </template>
 

@@ -4,7 +4,23 @@
 </head>
 
 <body>
-  <div>{{loginButtons}}</div>
+  {{> navbar}}
+  <div class="container">
   {{renderPage}}
+  </div>
 </body>
 
+<template name="navbar">
+  <div class="navbar">
+      <div class="navbar-inner">
+          <div class="container">
+              <a class="brand" href="/">Epoca</a>
+              <ul class="nav">
+                  <li class="{{isPageActive 'root'}}" ><a href="/">Home</a></li>
+                  <li class="{{isPageActive 'characters'}}"><a href="/characters">Personaggi</a></li>
+                  <li>{{loginButtons}}</li>
+              </ul>
+          </div>
+      </div>
+  </div>
+</template>
