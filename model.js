@@ -3,6 +3,8 @@
 var displayName = function (user) {
   if (user.profile && user.profile.name)
     return user.profile.name;
+  if (!user.emails)
+      return undefined;
   return user.emails[0].address;
 };
 

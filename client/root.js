@@ -1,15 +1,16 @@
-Template.hello.greeting = function () {
+
+Template.root.greeting = function () {
 return "Welcome to epoca.";
 };
 
-Template.hello.currentUser = function() {
+Template.root.currentUser = function() {
     var user = Meteor.user();
     if (!user) return "Anonymous";
     return displayName(Meteor.user());
 }
 
-Template.hello.events({
-'click input' : function () {
+Template.root.events({
+'click button' : function () {
   // template data, if any, is available in 'this'
   if (typeof console !== 'undefined')
     console.log("You pressed the button");
