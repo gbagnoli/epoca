@@ -7,5 +7,6 @@ Template.characters.characters = function() {
 };
 
 Template.characters.ownerName = function(owner) { return displayName(owner); };
+Template.character.ownerName = Template.characters.ownerName;
 Template.character.character = function() { return Session.get('character'); };
 Template.character404.character = function() { return Session.get('characterId'); };
