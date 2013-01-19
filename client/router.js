@@ -8,6 +8,8 @@ Meteor.Router.add({
             return "character404";
         }
         Session.set("character", char);
+        Session.set("dirty", null);
+        Session.set('errors', null);
         return "character";
     }
 });

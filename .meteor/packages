@@ -8,6 +8,6 @@ insecure
 preserve-inputs
 accounts-password
 accounts-ui
-bootstrap
-bootstrap.less
 router
+bootstrap.less
+jquery

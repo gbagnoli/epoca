@@ -18,51 +18,211 @@ Nessun personaggio trovato.
 
 <template name="character">
     {{#with character}}
-    <h2 class="pull-left">{{nome}}</h2>
-    {{/with}}
-    <div class"row">
-        <div class="span12">
-            <div class="row">
-                <div class="span4">
-                    <table class="table table-bordered table-striped table-condensed table-hover">
-                        <tbody>
-                        <tr><td>Forza</td><td>10</td></tr>
-                        <tr><td>Agilità</td><td>10</td></tr>
-                        <tr><td>Costituzione</td><td>10</td></tr>
-                        <tr><td>Intelligenza</td><td>10</td></tr>
-                        <tr><td>Intuizione</td><td>10</td></tr>
-                        <tr><td>Prontezza</td><td>10</td></tr>
-                        <tr><td>Aspetto</td><td>10</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="span4">
-                    <table class="table table-bordered table-striped table-condensed table-hover">
-                        <tbody>
-                        <tr><td>Carisma</td><td>10</td></tr>
-                        <tr><td>Disciplina</td><td>10</td></tr>
-                        <tr><td>Movimento</td><td>10</td></tr>
-                        <tr><td>Reazione</td><td>10</td></tr>
-                        <tr><td>Vita</td><td>10</td></tr>
-                        <tr><td>Volontà</td><td>10</td></tr>
-                        <tr><td>Saggezza</td><td>10</td></tr>
-                        <tr><td>Seduzione</td><td>10</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="span4">
-                    <table class="table table-bordered table-striped table-condensed table-hover">
-                        <tbody>
-                        <tr><td>Altezza</td><td>1.60</td></tr>
-                        <tr><td>Peso</td><td>1.60</td></tr>
-                        <tr><td>Razza</td><td>1.60</td></tr>
-                        <tr><td>Capelli</td><td>1.60</td></tr>
-                        <tr><td>Occhi</td><td>1.60</td></tr>
-                        <tr><td>Sesso</td><td>1.60</td></tr>
-                        </tbody>
-                    </table>
+    {{!TABS}}
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tabcaratteristiche" data-toggle="tab">Caratteristiche</a></li>
+        <li><a href="#tababilita" data-toggle="tab">Abilità</a><li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active" id="tabcaratteristiche">
+            {{!TAB CARATTERISTICHE}}
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="row-fluid">
+                        <div class="span8">
+                            {{!CARATTERISTICHE}}
+                            <div class="row-fluid">
+                                <div class="span6">
+                                    {{!CARATTERISTICHE PRINCIPALI}}
+                                    <table class="chartable table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>Caratteristica</th>
+                                                <th>Abbr.</th>
+                                                <th>Totale</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Forza</td><td><strong>FR</strong></td>
+                                            <td><div class="control-group {{statusClass 'FR'}}"><input id="FR" class="input-mini" type="text" value="{{FR}}" value-type="int"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Agilità</td><td><strong>AG</strong></td>
+                                            <td><div class="control-group {{statusClass 'AG'}}"><input id="AG" class="input-mini" type="text" value="{{AG}}" value-type="int"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Costituzione</td><td><strong>CO</strong></td>
+                                            <td><div class="control-group {{statusClass 'CO'}}"><input id="CO" class="input-mini" type="text" value="{{CO}}" value-type="int"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Intelligenza</td><td><strong>IN</strong></td>
+                                            <td><div class="control-group {{statusClass 'IN'}}"><input id="IN" class="input-mini" type="text" value="{{IN}}" value-type="int"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Intuizione</td><td><strong>IT</strong></td>
+                                            <td><div class="control-group {{statusClass 'IT'}}"><input id="IT" class="input-mini" type="text" value="{{IT}}" value-type="int"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prontezza</td><td><strong>PR</strong></td>
+                                            <td><div class="control-group {{statusClass 'PR'}}"><input id="PR" class="input-mini" type="text" value="{{PR}}" value-type="int"></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Aspetto</td><td><strong>AS</strong></td>
+                                            <td><div class="control-group {{statusClass 'AS'}}"><input id="AS" class="input-mini" type="text" value="{{AS}}" value-type="int"></div></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="span6">
+                                    {{!CARATTERISTICHE - SECONDARIE}}
+                                    <table class="chartable">
+                                        <thead>
+                                            <tr>
+                                                <th>Caratteristica</th>
+                                                <th>Totale</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>Carisma<span class="pull-right"><i class="icon-info-sign" rel="tooltip" title="PR + [IN + AS]"></i></span></td>
+                                            <td><span class="input-mini uneditable-input">{{carisma}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Disciplina<span class="pull-right"><i class="icon-info-sign" rel="tooltip" title="PR + IT"></i></span></td>
+                                            <td><span class="input-mini uneditable-input">{{disciplina}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Movimento<span class="pull-right"><i class="icon-info-sign" rel="tooltip" title="AG + FR"></i></span></td>
+                                            <td><span class="input-mini uneditable-input">{{movimento}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reazione<span class="pull-right"><i class="icon-info-sign" rel="tooltip" title="PR + [PR + AG]"></i></span></td>
+                                            <td><span class="input-mini uneditable-input">{{reazione}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vita<span class="pull-right"><i class="icon-info-sign" rel="tooltip" title="FR + CO"></i></span></td>
+                                            <td><span class="input-mini uneditable-input">{{vita}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Volontà<span class="pull-right"><i class="icon-info-sign" rel="tooltip" title="IN + IT"></i></span></td>
+                                            <td><span class="input-mini uneditable-input">{{volonta}}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Saggezza</td>
+                                            <td><span class="input-mini uneditable-input">{{saggezza}}</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                {{!C/AS/PSv/INS}}
+                                <div class="span3">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Abilità Speciali</td>
+                                            <td><div class="control-group {{statusClass 'abilita_speciali'}}"><div class="input-append"><input id="abilita_speciali" type="text" value-type="int" value="{{abilita_speciali}}" class="input-mini"><span class="add-on" rel="tooltip" title="Max. Abilità speciali">{{max_abilita_speciali}}</span></div></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="span3">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Punti Sviluppo Accumulati</td>
+                                            <td><div class="control-group {{statusClass 'punti_sviluppo_accumulati'}}"><input id="punti_sviluppo_accumulati" value-type="int" type="text" value="{{punti_sviluppo_accumulati}}" class="input-mini"></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="span3">
+                                    <table class="table"><tr><td>
+                                    <div class="input-append input-prepend">
+                                        <span class="add-on" rel="tooltip" title="Coefficiete di età"><strong>C</strong></span>
+                                        <span class="input-mini uneditable-input">{{C}}</span>
+                                        <span class="add-on" rel="tooltip" title="P.Sviluppo min">{{punti_sviluppo_min}}</span>
+                                        <span class="add-on" rel="tooltip" title="P.Sviluppo max">{{punti_sviluppo_max}}</span>
+                                    </div>
+                                    </td></tr></table>
+                                </div>
+                                <div class="span3">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Insanità</td>
+                                            <td><div class="control-group {{statusClass 'insanità'}}"><input id="insanita" value-type="int" type="text" value="{{insanita}}" class="input-mini"></div></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                                {{!ANNOTAZIONI}}
+                                <div class="span12">
+                                    <strong>Annotazioni, Abilità speciali e particolarità</strong>
+                                    <textarea class="input-block-level" rows="6">{{annotazioni}}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="span4">
+                            {{!DESCRIZIONE}}
+                            <table class="chartable">
+                                <tbody>
+                                <tr><td colspan="2" style="text-align: center"><h2>{{nome}}</h2>
+                                        <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
+                                        <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
+                                    </td></tr>
+                                <tr><td>Giocatore</td><td>{{ownerName character.owner}}</td></tr>
+                                <tr><td>Età</td><td><div class="control-group {{statusClass 'eta'}}"><input id="eta" value-type="int" type="text" value="{{eta}}" class="input-small"></div></td></tr>
+                                <tr><td>Altezza (m)</td><td><div class="control-group {{statusClass 'altezza'}}"><input type="text" value="{{altezza}}" class="input-small" id="altezza"></div></td></tr>
+                                        <tr><td>Peso (kg)</td><td><div class="control-group {{statusClass 'peso'}}"><input type="text" value="{{peso}}" class="input-small" id="peso"></div></td></tr>
+                                <tr><td>Razza</td><td><input type="text" value="{{razza}}" class="input-small"></td></tr>
+                                <tr><td>Capelli</td><td><div class="control-group {{statusClass 'capelli'}}"><input type="text" value="{{capelli}}" class="input-small" id="capelli"></div></td></tr>
+                                <tr><td>Occhi</td><td><div class="control-group {{statusClass 'occhi'}}"><input type="text" value="{{occhi}}" class="input-small" id="occhi"></div></td></tr>
+                                <tr>
+                                    <td>Sesso</td>
+                                    <td>
+                                        <label class="radio inline"><input type="radio" value="m" name="sex" {{#if is_male}}checked{{/if}} disabled>M</label>
+                                        <label class="radio inline"><input type="radio" value="f" name="sex" {{#unless is_male}}checked{{/unless}} disabled>F</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Seduzione</td>
+                                    <td>
+                                        <input type="text" value="{{seduzione}}" class="input-mini uneditable-input">
+                                        <input type="text" value="0" class="input-mini">
+                                        <input type="text" value="{{seduzione}}" class="input-mini uneditable-input">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="chartable">
+                                {{!LINGUE}}
+                                <thead>
+                                    <tr>
+                                        <th>Lingua</th>
+                                        <th>Sviluppo</th>
+                                        <th>Competenza</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {{#each lingue}}
+                                    <tr>
+                                        <td>{{this.nome}}</td>
+                                        <td><input class="input-mini" value="{{this.sviluppo}}" type="text"></td>
+                                        <td><input class="input-mini" value="{{this.competenza}}" type="text"></td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-        <div>
-    </div>
+        </div> <!-- tab-caratteristche -->
+
+        <div class="tab-pane" id="tababilita">
+            <p>Abilità</p>
+        </div>
+    </div> <!-- tab-content -->
+    {{/with}}
 </template>
+
+
