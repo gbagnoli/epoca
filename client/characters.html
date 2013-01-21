@@ -19,7 +19,14 @@ Nessun personaggio trovato.
 <template name="character">
     {{#with character}}
     {{!TABS}}
+    <div class="pull-right">
+    </div>
     <ul class="nav nav-tabs">
+        <li class="mainbtn">
+        <h2 class="pull-left mainbtn">{{nome}}</h2>
+        <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini mainbtn" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
+        <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini mainbtn" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
+        </li>
         <li class="active"><a href="#tabcaratteristiche" data-toggle="tab">Caratteristiche</a></li>
         <li><a href="#tababilita" data-toggle="tab">Abilità</a><li>
     </ul>
@@ -69,7 +76,10 @@ Nessun personaggio trovato.
                                         </tr>
                                         <tr>
                                             <td>Aspetto</td><td><strong>AS</strong></td>
-                                            <td><div class="control-group {{statusClass 'AS'}}"><input id="AS" class="input-mini" type="text" value="{{AS}}" value-type="int"></div></td>
+                                            <td>
+                                                <div class="pull-left control-group {{statusClass 'aspetto'}}"><input rel="tooltip" title="Valore" id="aspetto" class="input-mini" type="text" value="{{aspetto}}" value-type="int"></div>
+                                                <div class="control-group {{statusClass 'AS'}}"><input id="AS" rel="tooltip" title="Bonus "class="input-mini" type="text" value="{{AS}}" value-type="int"></div>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -165,11 +175,7 @@ Nessun personaggio trovato.
                             {{!DESCRIZIONE}}
                             <table class="chartable">
                                 <tbody>
-                                <tr><td colspan="2" style="text-align: center"><h2>{{nome}}</h2>
-                                        <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
-                                        <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
-                                    </td></tr>
-                                <tr><td>Giocatore</td><td>{{ownerName character.owner}}</td></tr>
+                                <tr><td>Giocatore</td><td>{{ownerName owner}}</td></tr>
                                 <tr><td>Età</td><td><div class="control-group {{statusClass 'eta'}}"><input id="eta" value-type="int" type="text" value="{{eta}}" class="input-small"></div></td></tr>
                                 <tr><td>Altezza (m)</td><td><div class="control-group {{statusClass 'altezza'}}"><input type="text" value="{{altezza}}" class="input-small" id="altezza"></div></td></tr>
                                         <tr><td>Peso (kg)</td><td><div class="control-group {{statusClass 'peso'}}"><input type="text" value="{{peso}}" class="input-small" id="peso"></div></td></tr>
@@ -186,28 +192,53 @@ Nessun personaggio trovato.
                                 <tr>
                                     <td>Seduzione</td>
                                     <td>
-                                        <input type="text" value="{{seduzione}}" class="input-mini uneditable-input">
-                                        <input type="text" value="0" class="input-mini">
-                                        <input type="text" value="{{seduzione}}" class="input-mini uneditable-input">
+                                        <span class="pull-left input-mini uneditable-input">{{seduzione}}</span>
+                                        <div rel="tooltip" title="Modificatore" class="pull-left control-group {{statusClass 'mod_seduzione'}}"><input id="mod_seduzione" value-type="int" type="text" value="{{mod_seduzione}}" class="input-mini"></div>
+                                        <span rel="tooltip" title="Totale" class="pull-left input-mini uneditable-input">{{seduzione_total}}</span>
                                     </td>
                                 </tr>
                                 </tbody>
                             </table>
                             <table class="chartable">
                                 {{!LINGUE}}
+                                <div id="langForm" class="modal hide" tabindex="-1" role="dialog" aria-labelled-by="langFormLabel" aria-hidden="true">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h3 id="langFormLabel">Modal Title</h3>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="langFormForm">
+                                            <label>Nome</label>
+                                            <input type="text" id="langFormNome" placeholder="Nome" autosave="false">
+                                            <label>Sviluppo</label>
+                                            <input type="text" id="langFormSviluppo" placeholder="Sviluppo" autosave="false">
+                                            <label>Competenza</label>
+                                            <input type="text" id="langFormCompetenza" placeholder="Competenza" autosave="false">
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                        <button class="btn btn-primary">Salva</button>
+                                    </div>
+                                </div>
                                 <thead>
                                     <tr>
                                         <th>Lingua</th>
                                         <th>Sviluppo</th>
                                         <th>Competenza</th>
+                                        <th><button class="btn btn-mini" id="newLangButton"><i class="icon-plus"></i> Nuova Lingua</a></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {{#each lingue}}
                                     <tr>
-                                        <td>{{this.nome}}</td>
-                                        <td><input class="input-mini" value="{{this.sviluppo}}" type="text"></td>
-                                        <td><input class="input-mini" value="{{this.competenza}}" type="text"></td>
+                                        <td>{{nome}}</td>
+                                        <td>{{sviluppo}}</td>
+                                        <td>{{competenza}}</td>
+                                        <td>
+                                            <button rel="tooltip" title="Modifica {{nome}}" lang="{{nome}}" class="btn btn-mini edit_lang"><i class="icon-pencil"></i></button>
+                                            <button rel="tooltip" title="Rimuovi {{nome}}" lang="{{nome}}" class="btn btn-inverse btn-mini remove_lang"><i class="icon-white icon-remove"></i></button>
+                                        </td>
                                     </tr>
                                     {{/each}}
                                 </tbody>

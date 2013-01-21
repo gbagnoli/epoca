@@ -2,6 +2,15 @@ var m = function(a, b) {
     return Math.floor((a + b) / 2);
 };
 
+var seduzione = function(character) {
+    if (character.AS < 0)
+        bonus = character.AS * 5;
+    else
+        bonus = character.AS;
+    fragco = Math.floor((character.FR + character.AG + character.CO) / 3);
+    return character.aspetto + bonus + fragco + character.IN + character.PR + m(character.IN, character.AS);
+};
+
 Template.characters.anyCharacters = function() {
     return Characters.find().count() > 0;
 };
@@ -85,12 +94,13 @@ TC.saggezza = function () {
       return 8 + Math.floor((this.eta - 66) / 2);
 };
 TC.seduzione = function () {
-    if (this.AS < 0)
-        bonus = this.AS * 5;
-    else
-        bonus = this.AS;
-    fragco = Math.floor((this.FR + this.AG + this.CO) / 3);
-    return this.aspetto + bonus + fragco + this.IN + this.PR + m(this.IN, this.AS);
+    return seduzione(this);
+};
+TC.seduzione_total = function () {
+    var bonus = this.mod_seduzione;
+    if (!bonus)
+        bonus = 0;
+    return seduzione(this) + bonus;
 };
 TC.C = function () {
    // Par 6.2.1 - p 289 (303)
@@ -100,7 +110,6 @@ TC.C = function () {
        return 12 + Math.ceil((this.eta - 35) / 2);
    }
 };
-
 
 Template.character.events({
     'keypress input' : function(event) {
@@ -134,12 +143,23 @@ Template.character.events({
         Session.set('dirty', null);
         Session.set('errors', null);
     },
+    'click #newLangButton': function(event) {
+        $('#langFormLabel').html("Nuova Lingua");
+        $('#langFormForm')[0].reset()
+        $('#langForm').modal();
+        $('#langForm').on('hide', function () {
+            var char = Session.get('character')
+        });
+    },
     'changed input, blur input': function(event) {
         var id = event.target.id;
         if (!id)
             return;
 
         var jElem = $('#' + id);
+        var autosave = jElem.attr('autosave');
+        if (autosave == "false")
+            return;
         var value = jElem.val();
         var dirty = Session.get('dirty') || {};
         var char = Session.get('character');
