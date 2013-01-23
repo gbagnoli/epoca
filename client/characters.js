@@ -19,14 +19,73 @@ Template.characters.characters = function() {
     return Characters.find();
 };
 
+Template.characters.error = function() {
+    return Session.get("error");
+};
+
+Template.characters.char_to_remove= function() {
+    return Session.get("removechar");
+}
+
 Template.characters.events({
     'click #newCharSubmit': function(event) {
-        form = $('#newChar');
-        data = form.serializeArray();
+        var data = {owner: Meteor.user()._id};
+        var formData = $('#newChar').serializeArray();
+
+        for (var d in formData) {
+            var field = formData[d];
+            if (!field.value) {
+                Session.set("error", field.name + " non specificato");
+                return false;
+            }
+
+            switch (field.name) {
+                case "Nome":
+                    data['nome'] = field.value;
+                    break;
+                case "Razza":
+                    data['razza'] = field.value;
+                    break;
+                case "Sesso":
+                    data['sesso'] = field.value;
+            }
+        }
+        if (Characters.findOne({nome: data['nome']})) {
+            Session.set("error", "Personaggio già esistente");
+            return;
+        }
+        // XXX: LOG!
+        Characters.insert(data);
+        $('#newChar')[0].reset();
     },
+    'click #dismissAlert': function (event) {
+        Session.set("error", false);
+        $('.alert').alert('close');
+    },
+    'click #removeCharConfirmBtn': function(event) {
+        var charName = Session.get('removechar');
+        console.log("Rimuovo " + charName);
+        // XXX LOG!
+    },
+    'click .remove-char': function (event) {
+        var node;
+        // Always get the button, not the icon
+        if (!event.currentTarget)
+            node = event.target;
+        else
+            node = event.currentTarget;
+        node = $(node);
+        var charName = node.attr('character');
+        Characters.remove({nome: charName});
+    }
 });
 
-Template.characters.ownerName = function(owner) { return displayName(owner); };
+Template.characters.ownerName = function(owner) {
+    var user = Meteor.users.findOne({'_id': owner});
+    if (user)
+        return displayName(user);
+    return "???";
+};
 Template.character404.character = function() { return Session.get('characterId'); };
 
 
@@ -125,8 +184,10 @@ Template.character.events({
         }
     },
     'click #save': function(event) {
-        if (Session.get('dirty') && !Session.get("errors"))
+        if (Session.get('dirty') && !Session.get("errors")) {
+            // XXX LOG
             Characters.update(Session.get('character')._id, {$set: Session.get("dirty")});
+        }
         Session.set('dirty', null);
     },
     'click #reset': function(event) {

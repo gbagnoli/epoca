@@ -1,5 +1,3 @@
-// Users
-
 Characters = new Meteor.Collection('characters');
 
 var displayName = function (user) {

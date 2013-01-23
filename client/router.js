@@ -1,9 +1,12 @@
 Meteor.Router.add({
     "/": "root",
-    "/characters": "characters",
+    "/characters": function() {
+        Session.set("error", false);
+        return "characters";
+    },
     "/characters/:id": function(id) {
         Session.set("characterId", id);
-        var char = Characters.findOne({"nome": Session.get("characterId")});
+        var char = Characters.findOne({"nome": id});
         if (!char) {
             return "character404";
         }
