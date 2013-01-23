@@ -11,3 +11,4 @@ accounts-ui
 router
 bootstrap.less
 jquery
+bootboxjs

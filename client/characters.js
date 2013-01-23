@@ -62,11 +62,6 @@ Template.characters.events({
         Session.set("error", false);
         $('.alert').alert('close');
     },
-    'click #removeCharConfirmBtn': function(event) {
-        var charName = Session.get('removechar');
-        console.log("Rimuovo " + charName);
-        // XXX LOG!
-    },
     'click .remove-char': function (event) {
         var node;
         // Always get the button, not the icon
@@ -76,7 +71,12 @@ Template.characters.events({
             node = event.currentTarget;
         node = $(node);
         var charName = node.attr('character');
-        Characters.remove({nome: charName});
+        bootbox.confirm("Sei sicuro di voler eliminare " + charName + "??", function(result) {
+            if (result) {
+                // XXX LOG
+                Characters.remove({nome: charName});
+            }
+        });
     }
 });
 
