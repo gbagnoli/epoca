@@ -19,6 +19,13 @@ Template.characters.characters = function() {
     return Characters.find();
 };
 
+Template.characters.events({
+    'click #newCharSubmit': function(event) {
+        form = $('#newChar');
+        data = form.serializeArray();
+    },
+});
+
 Template.characters.ownerName = function(owner) { return displayName(owner); };
 Template.character404.character = function() { return Session.get('characterId'); };
 

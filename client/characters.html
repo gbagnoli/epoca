@@ -1,14 +1,33 @@
 <template name="characters">
 <h1>Personaggi</h1>
 {{#if anyCharacters}}
-<ul>
-{{#each characters}}
-<li><a href="/characters/{{nome}}">{{nome}}</a> {{ownerName owner}}</li>
-{{/each}}
-<ul>
-{{else}}
-Nessun personaggio trovato.
-{{/if}}
+<div class="row">
+    <div class="span4">
+        <form id="newChar">
+            <label>Nome</label>
+            <input type="text" class="input" name="newCharName" placeholder="Nome">
+            <label>Età</label>
+            <input type="text" class="input-mini" name="newCharAge" placeholder="Età">
+            <label>Razza</label>
+            <input type="text" class="input-small" name="newCharRace" placeholder="Razza">
+            <label>Sesso</label>
+            <label class="radio inline"><input type="radio" value="m" name="newCharSex">M</label>
+            <label class="radio inline"><input type="radio" value="f" name="newCharSex">F</label>
+            <label></label>
+        </form>
+        <button id="newCharSubmit" class="btn btn-primary">Crea</button>
+    </div>
+    <div class="span8">
+        {{#each characters}}
+        <li><a href="/characters/{{nome}}">{{nome}}</a> {{ownerName owner}}</li>
+        {{/each}}
+        <ul>
+        {{else}}
+        Nessun personaggio trovato.
+        {{/if}}
+        <ul>
+    </div>
+</div>
 </template>
 
 <template name="character404">
