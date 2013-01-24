@@ -1,13 +1,17 @@
 <template name="characters">
-<h1>Personaggi</h1>
 <div class="row">
     <div class="span4">
-        {{#if error}}
-        <div class="alert alert-error">
-            <button type="button" class="close" id="dismissAlert">&times;</button>
-            {{error}}
+        <h1>Personaggi</h1>
+    </div>
+    <div class="span8">
+        <div class="alert alert-error {{#unless error}}unvisible{{/unless}}">
+        <button type="button" class="close" id="dismissAlert">&times;</button>
+        {{error}}
         </div>
-        {{/if}}
+    </div>
+</div>
+<div class="row">
+    <div class="span4">
         <form id="newChar">
             <label>Nome</label>
             <input type="text" class="input" name="Nome" placeholder="Nome" required>
