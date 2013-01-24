@@ -1,3 +1,4 @@
+// UTILS
 var m = function(a, b) {
     return Math.floor((a + b) / 2);
 };
@@ -11,6 +12,7 @@ var seduzione = function(character) {
     return character.aspetto + bonus + fragco + character.IN + character.PR + m(character.IN, character.AS);
 };
 
+// Characters
 Template.characters.anyCharacters = function() {
     return Characters.find().count() > 0;
 };
@@ -88,9 +90,10 @@ Template.characters.ownerName = function(owner) {
 };
 Template.character404.character = function() { return Session.get('characterId'); };
 
-
+// Character
 var TC = Template.character;
 
+// Form Status
 TC.ownerName = Template.characters.ownerName;
 TC.character = function() { return Session.get('character'); };
 TC.rendered = function() {
@@ -142,6 +145,7 @@ TC.statusClass = function(what) {
     return "";
 };
 
+// Caratteristiche
 TC.is_male = function () { return this.sesso == "m"; };
 TC.carisma = function () { return this.PR + m(this.IN, this.AS); };
 TC.disciplina = function () { return this.PR + this.IT; };
@@ -175,6 +179,10 @@ TC.C = function () {
    } else {
        return 12 + Math.ceil((this.eta - 35) / 2);
    }
+};
+TC.sortedLingue = function () {
+    return _.sortBy(Session.get('character').lingue,
+                    function(lingua) { return -lingua.competenza; });
 };
 
 Template.character.events({
@@ -213,11 +221,74 @@ Template.character.events({
     },
     'click #newLangButton': function(event) {
         $('#langFormLabel').html("Nuova Lingua");
-        $('#langFormForm')[0].reset()
         $('#langForm').modal();
-        $('#langForm').on('hide', function () {
-            var char = Session.get('character')
+    },
+    'click button.edit-lang': function(event) {
+        var node;
+        if (!event.currentTarget)
+            node = event.target;
+        else
+            node = event.currentTarget;
+        node = $(node);
+        var lang = node.attr('lang');
+        var char = Session.get('character');
+        $('#langFormLabel').html("Modifica Lingua");
+        _.each(char.lingue, function(e, k, l) {
+            if (e.nome == lang) {
+                $('#langFormNome').val(e.nome);
+                $('#langFormSviluppo').val(e.sviluppo);
+                $('#langFormCompetenza').val(e.competenza);
+            }
         });
+        $('#langForm').modal();
+    },
+    'click #langFormSave': function (event) {
+        event.stopPropagation();
+        var data = {};
+        _.each($('#langForm input'), function (e, k, l) {
+            var elem = $(e);
+            var cgroup = $(elem.parents()[0]);
+            cgroup.removeClass('error');
+            value = elem.val();
+            if (elem.attr("name") == "nome") {
+                if (!value) {
+                    value = null;
+                    cgroup.addClass('error');
+                }
+            } else {
+                value = parseInt(value);
+                if (isNaN(value)) {
+                    cgroup.addClass('error');
+                }
+            }
+            data[elem.attr('name')] = value;
+        });
+        if (!_.contains(data, NaN) || !_.contains(data, null)) {
+            var char = Session.get('character');
+            // XXX LOG!
+            Characters.update({"_id": char._id,
+                              "lingue.nome": data['nome']},
+                              {$pull: {'lingue': {"nome": data['nome'] }}});
+            Characters.update(char._id, {$push: {'lingue' : data}});
+            $('#langForm').modal('hide');
+        }
+    },
+    'click button.remove-lang': function(event) {
+        if (!event.currentTarget)
+            node = event.target;
+        else
+            node = event.currentTarget;
+        lingua = $(node).attr('lang')
+        bootbox.confirm('Sicuro di voler rimuovere ' + lingua + "?",
+                        function (result) {
+                            if (result) {
+                                // XXX LOG!
+                                Characters.update({"_id": Session.get('character')._id,
+                                                  "lingue.nome": lingua.nome},
+                                                  {$pull: {'lingue': {"nome": lingua }}}
+                                );
+                            }
+                        });
     },
     'changed input, blur input': function(event) {
         var id = event.target.id;

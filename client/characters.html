@@ -68,6 +68,8 @@
         </li>
         <li class="active"><a href="#tabcaratteristiche" data-toggle="tab">Caratteristiche</a></li>
         <li><a href="#tababilita" data-toggle="tab">Abilità</a><li>
+        <li><a href="#tabcombattimento" data-toggle="tab">Combattimento</a><li>
+        <li><a href="#taboggetti" data-toggle="tab">Oggetti</a><li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tabcaratteristiche">
@@ -246,18 +248,24 @@
                                         <h3 id="langFormLabel">Modal Title</h3>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="langFormForm">
+                                        <form class="form-horizontal">
+                                        <div class="control-group">
                                             <label>Nome</label>
-                                            <input type="text" id="langFormNome" placeholder="Nome" autosave="false">
+                                            <input type="text" name="nome" placeholder="Nome" id="langFormNome" autosave='false' required>
+                                        </div>
+                                        <div class="control-group">
                                             <label>Sviluppo</label>
-                                            <input type="text" id="langFormSviluppo" placeholder="Sviluppo" autosave="false">
+                                            <input type="text" name="sviluppo" placeholder="Sviluppo" id="langFormSviluppo" autosave='false' required>
+                                        </div>
+                                        <div class="control-group">
                                             <label>Competenza</label>
-                                            <input type="text" id="langFormCompetenza" placeholder="Competenza" autosave="false">
+                                            <input type="text" name="competenza" placeholder="Competenza" id="langFormCompetenza" autosave='false' required>
+                                        </div>
                                         </form>
                                     </div>
                                     <div class="modal-footer">
-                                        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-                                        <button class="btn btn-primary">Salva</button>
+                                        <button id="langFormDismiss" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                                        <button id="langFormSave"class="btn btn-success">Salva</button>
                                     </div>
                                 </div>
                                 <thead>
@@ -269,14 +277,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#each lingue}}
+                                    {{#each sortedLingue}}
                                     <tr>
                                         <td>{{nome}}</td>
                                         <td>{{sviluppo}}</td>
                                         <td>{{competenza}}</td>
                                         <td>
-                                            <button rel="tooltip" title="Modifica {{nome}}" lang="{{nome}}" class="btn btn-mini edit_lang"><i class="icon-pencil"></i></button>
-                                            <button rel="tooltip" title="Rimuovi {{nome}}" lang="{{nome}}" class="btn btn-inverse btn-mini remove_lang"><i class="icon-white icon-remove"></i></button>
+                                            <button rel="tooltip" title="Modifica {{nome}}" lang="{{nome}}" class="btn btn-mini edit-lang"><i class="icon-pencil"></i></button>
+                                            <button rel="tooltip" title="Rimuovi {{nome}}" lang="{{nome}}" class="btn btn-inverse btn-mini remove-lang"><i class="icon-white icon-remove"></i></button>
                                         </td>
                                     </tr>
                                     {{/each}}
@@ -290,6 +298,14 @@
 
         <div class="tab-pane" id="tababilita">
             <p>Abilità</p>
+        </div>
+
+        <div class="tab-pane" id="tabcombattimento">
+            <p>Combattimento</p>
+        </div>
+
+        <div class="tab-pane" id="taboggetti">
+            <p>Oggetti</p>
         </div>
     </div> <!-- tab-content -->
     {{/with}}
