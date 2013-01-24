@@ -245,6 +245,7 @@ Template.character.events({
     'click #langFormSave': function (event) {
         event.stopPropagation();
         var data = {};
+        var error = false;
         _.each($('#langForm input'), function (e, k, l) {
             var elem = $(e);
             var cgroup = $(elem.parents()[0]);
@@ -252,18 +253,24 @@ Template.character.events({
             value = elem.val();
             if (elem.attr("name") == "nome") {
                 if (!value) {
-                    value = null;
+                    error = true;
                     cgroup.addClass('error');
                 }
             } else {
                 value = parseInt(value);
                 if (isNaN(value)) {
                     cgroup.addClass('error');
+                    error = true;
+                } else if (elem.attr("name") == "competenza") {
+                    if (value > 5) {
+                        cgroup.addClass('error');
+                        error = true;
+                    }
                 }
             }
             data[elem.attr('name')] = value;
         });
-        if (!_.contains(data, NaN) || !_.contains(data, null)) {
+        if (!error) {
             var char = Session.get('character');
             // XXX LOG!
             Characters.update({"_id": char._id,
