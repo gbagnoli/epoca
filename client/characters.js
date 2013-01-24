@@ -101,6 +101,13 @@ TC.rendered = function() {
   if (tooltips.length) tooltips.tooltip();
 };
 
+TC.isActive = function (tab) {
+    var current = Session.get('currentTab');
+    if (tab == current)
+        return true;
+    return false;
+};
+
 TC.dirty = function() {
     if (Session.get("dirty")) return true;
     else return false;

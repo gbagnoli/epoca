@@ -73,49 +73,6 @@
     </ul>
     <div class="tab-content">
         <div class="tab-pane active" id="tabcaratteristiche">
-            {{> caratteristiche}}
-        </div> <!-- tab-caratteristche -->
-
-        <div class="tab-pane" id="tababilita">
-            <div class="row-fluid">
-                <div class="span12">
-                    <table class="chartable">
-                        <thead>
-                            <tr>
-                                <th>Abilità</th>
-                                <th>Gradi(5)</th>
-                                <th>Gradi(3)</th>
-                                <th>Gradi(1)</th>
-                                <th>Studio Max.</th>
-                                <th>Tot. Gradi</th>
-                                <th>Oggetto</th>
-                                <th>Speciale</th>
-                                <th>Speciale</th>
-                                <th>Totale</th>
-                            </tr>
-                        </thead>
-                            <tbody>
-                            {{#each abilities}}
-                            {{> ability}}
-                            {{/each}}
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <div class="tab-pane" id="tabcombattimento">
-            <p>Combattimento</p>
-        </div>
-
-        <div class="tab-pane" id="taboggetti">
-            <p>Oggetti</p>
-        </div>
-    </div> <!-- tab-content -->
-    {{/with}}
-</template>
-
-<template name="caratteristiche">
             <div class="row-fluid">
                 <div class="span12">
                     <div class="row-fluid">
@@ -335,4 +292,43 @@
                     </div>
                 </div>
             </div>
+        </div> <!-- tab-caratteristche -->
+
+        <div class="tab-pane" id="tababilita">
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="chartable">
+                        <thead>
+                            <tr>
+                                <th>Abilità</th>
+                                <th>Gradi(5)</th>
+                                <th>Gradi(3)</th>
+                                <th>Gradi(1)</th>
+                                <th>Studio Max.</th>
+                                <th>Tot. Gradi</th>
+                                <th>Oggetto</th>
+                                <th>Speciale</th>
+                                <th>Speciale</th>
+                                <th>Totale</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            {{#each abilities}}
+                            {{> ability}}
+                            {{/each}}
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tabcombattimento">
+            <p>Combattimento</p>
+        </div>
+
+        <div class="tab-pane" id="taboggetti">
+            <p>Oggetti</p>
+        </div>
+    </div> <!-- tab-content -->
+    {{/with}}
 </template>
