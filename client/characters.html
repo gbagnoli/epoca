@@ -59,12 +59,12 @@
     {{#with character}}
     {{!TABS}}
     <div class="pull-right">
+        <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini mainbtn" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
+        <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini mainbtn" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
     </div>
     <ul class="nav nav-tabs">
         <li class="mainbtn">
         <h2 class="pull-left mainbtn">{{nome}}</h2>
-        <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini mainbtn" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
-        <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini mainbtn" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
         </li>
         <li class="active"><a href="#tabcaratteristiche" data-toggle="tab">Caratteristiche</a></li>
         <li><a href="#tababilita" data-toggle="tab">Abilità</a><li>
@@ -297,7 +297,31 @@
         </div> <!-- tab-caratteristche -->
 
         <div class="tab-pane" id="tababilita">
-            <p>Abilità</p>
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="chartable">
+                        <thead>
+                            <tr>
+                                <th>Abilità</th>
+                                <th>Gradi(5)</th>
+                                <th>Gradi(3)</th>
+                                <th>Gradi(1)</th>
+                                <th>Studio Max.</th>
+                                <th>Tot. Gradi</th>
+                                <th>Oggetto</th>
+                                <th>Speciale</th>
+                                <th>Speciale</th>
+                                <th>Totale</th>
+                            </tr>
+                        </thead>
+                            <tbody>
+                            {{#each abilities}}
+                            {{> ability}}
+                            {{/each}}
+                            </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
         <div class="tab-pane" id="tabcombattimento">

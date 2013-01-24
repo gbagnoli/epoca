@@ -184,6 +184,16 @@ TC.sortedLingue = function () {
     return _.sortBy(Session.get('character').lingue,
                     function(lingua) { return -lingua.competenza; });
 };
+// Abilità
+TC.abilities = function () {
+    var char = Session.get('character');
+    return _.map(abilities, function(val, key) {
+        var cl = _.clone(val);
+        cl.key = key;
+        cl.char = char;
+        return cl;
+    });
+};
 
 Template.character.events({
     'keypress input' : function(event) {
@@ -202,20 +212,27 @@ Template.character.events({
         console.log('Aborting changes');
         var clear = function(id) {
             var jfield = $('#' + id);
+            // This sets the _original_ value!
             jfield.val(jfield[0].attributes['value'].value);
+        };
+
+        var clearObject = function(obj) {
+            if (!obj)
+                return;
+            _.map(obj, function(elem, key) {
+                if (_.isObject(elem)) {
+                    _.map(elem, function(e, k) {
+                        clear(key + "-" + k);
+                    });
+                } else {
+                    clear(key);
+                }
+            });
         };
         var errors = Session.get('errors');
         var dirty = Session.get('dirty');
-        if (errors) {
-            for (var error in errors) {
-                clear(error);
-            }
-        }
-        if (dirty) {
-            for (var field in dirty) {
-                clear(field);
-            }
-        }
+        clearObject(errors);
+        clearObject(dirty);
         Session.set('dirty', null);
         Session.set('errors', null);
     },
@@ -302,25 +319,58 @@ Template.character.events({
         if (!id)
             return;
 
-        var jElem = $('#' + id);
+        var jElem = $(event.target);
         var autosave = jElem.attr('autosave');
         if (autosave == "false")
             return;
         var value = jElem.val();
         var dirty = Session.get('dirty') || {};
         var char = Session.get('character');
-        var currentValue = char[id];
-        var dirtyValue = dirty[id];
         var errors = Session.get('errors') || {};
-        if (event.target.attributes['value-type'] && event.target.attributes['value-type'].value == 'int') {
+        if (id.indexOf('-') > 0) {
+            var char_key = id.split("-")[0];
+            var key = id.split("-")[1];
+            var currentValue = null;
+            if (char[char_key])
+                currentValue = char[char_key][key];
+            var dirtyValue = null;
+            if (dirty[char_key])
+                dirtyValye = dirty[char_key][key]
+        } else {
+            var char_key = null;
+            var key = id
+            var currentValue = char[key];
+            var dirtyValue = dirty[key];
+        }
+        var set_value = function (w, k, v) {
+            if (char_key) {
+                if (!w[char_key])
+                    w[char_key] = {};
+                w[char_key][k] = v;
+            } else {
+                w[k] = v;
+            }
+        }
+        var delete_value = function(w, k) {
+            if (char_key) {
+                if (w[char_key])
+                    delete w[char_key][k];
+                if (jQuery.isEmptyObject(w[char_key]))
+                    delete w[char_key];
+            } else {
+                delete w[k];
+            }
+        }
+
+        if (jElem.attr('value-type') && jElem.attr('value-type') == 'int') {
             value = parseInt(value);
             if (isNaN(value)) {
-                errors[id] = true;
+                set_value(errors, key, true);
                 Session.set('errors', errors);
                 return false;
             }
         }
-        delete errors[id];
+        delete_value(errors, key);
         if (jQuery.isEmptyObject(errors))
             errors = null;
         Session.set('errors', errors);
@@ -328,19 +378,19 @@ Template.character.events({
         if (!dirtyValue)  {
             if (currentValue != value) {
                 console.log("Setting " + id + " dirty: " + currentValue + " -> " + value);
-                dirty[id] = value;
+                set_value(dirty, key, value);
                 Session.set("dirty", dirty);
             }
         } else {
             if (currentValue == value) {
                 console.log("Removing " + id + " from dirty.");
-                delete dirty[id];
+                delete_value(dirty, key);
                 if (jQuery.isEmptyObject(dirty))
                     dirty = null;
                 Session.set("dirty", dirty);
             } else if (dirtyValue != value) {
                 console.log("Updating dirty value: " + dirtyValue + " -> " + value);
-                dirty[id] = value;
+                set_value(dirty, key, value);
                 Session.set('dirty', dirty);
             }
         }
