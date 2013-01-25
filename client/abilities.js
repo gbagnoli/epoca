@@ -72,6 +72,217 @@ var abilities = {
         "gradi3": 10,
         "gradi1": true,
         "nome": "Miti e Leggende"
-    }
+    },
+    'matematica' : {
+        "attribute" : "IN",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Matematica"
+    },
+    'erudizione' : {
+        "attribute" : "IN",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Erudizione"
+    },
+    'lavorare_metalli' : {
+        "attribute" : "FR",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Lavorare Metalli"
+    },
+    'lavorare_legno' : {
+        "attribute" : "FR",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Lavorare il Legno"
+    },
+    'lavorare_pietra' : {
+        "attribute" : "FR",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Lavorare la Pietra"
+    },
+    'lavorare_pelli_tessuti' : {
+        "attribute" : "AG",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Lavorare Pelli e Tessuti"
+    },
+    'colpire_alle_spalle' : {
+        "attribute" : "PR",
+        "studio": null,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Colpire alle Spalle"
+    },
+    'destrezza' : {
+        "attribute" : "[PR + AG]",
+        "studio": null,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Destrezza"
+    },
+    'inventare_capire_congegni' : {
+        "attribute" : "[IT + IN]",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Inventare / Capire Congegni"
+    },
+    'muoversi_silensiosamente' : {
+        "attribute" : "[IT + PR]",
+        "studio": null,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Muoversi Silenziosamente"
+    },
+    'Nascondersi' : {
+        "attribute" : "IT",
+        "studio": null,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Nascondersi"
+    },
+    'scas_costr_disatt_congegni' : {
+        "attribute" : "[IT + AG]",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Scass. / Costr. Disat. Congegni"
+    },
+    'scrittura_falsificazione' : {
+        "attribute" : "[IN + AG]",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Scrittura e Falsificazione"
+    },
+    'stordire' : {
+        "attribute" : "[AG + PR]",
+        "studio": null,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Stordire"
+    },
+    'travestimento_imitazione' : {
+        "attribute" : "[IT + PR]",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Travestimento e Imitazione"
+    },
+    'utilizzare_corde' : {
+        "attribute" : "AG",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Utilizzare Corde"
+    },
+    'addestrare_animali' : {
+        "attribute" : "PR",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Addestrare Animali",
+    },
+    'astronomia' : {
+        "attribute" : "IT",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Astronomia",
+    },
+    'capacita_mondo_naturale' : {
+        "attribute" : "IT",
+        "studio": null,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Capacità nel Mondo Naturale",
+    },
+    'cavalcare' : {
+        "attribute" : "[IT + AG]",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Cavalcare",
+    },
+    'commerciare_valutare' : {
+        "attribute" : "[IN + PR]",
+        "studio": 80,
+        "fixed_bonus": null,
+        "bonus_gradi": null,
+        "gradi5": 10,
+        "gradi3": 10,
+        "gradi1": true,
+        "nome": "Commerciare e Valutare",
+    },
+
 };
 
