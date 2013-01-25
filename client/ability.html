@@ -1,20 +1,32 @@
 <template name="ability">
 <tr>
-    <td><span  rel="tooltip" title="{{attribute}}" data-placement="right">{{nome}}</span></td>
+    <td><span {{#if has 'attribute'}} rel="tooltip" title="{{attribute}}" data-placement="right"{{/if}}>{{nome}}</span></td>
     <td>
+        {{#if has 'gradi5'}}
         <div class="control-group {{statusClass 'gradi5'}}">
             <input id="{{key}}-gradi5" class="input-mini" type="text" value="{{valueOf 'gradi5'}}" value-type="int">
         </div>
+        {{else}}
+        <span class="input-mini uneditable-input">{{parent_value 'gradi5'}}</span>
+        {{/if}}
     </td>
     <td>
+        {{#if has 'gradi3'}}
         <div class="control-group {{statusClass 'gradi3'}}">
             <input id="{{key}}-gradi3" class="input-mini" type="text" value="{{valueOf 'gradi3'}}" value-type="int">
         </div>
+        {{else}}
+        --
+        {{/if}}
     </td>
     <td>
+        {{#if has 'gradi1'}}
         <div class="control-group {{statusClass 'gradi1'}}">
             <input id="{{key}}-gradi1" class="input-mini" type="text" value="{{valueOf 'gradi1'}}" value-type="int">
         </div>
+        {{else}}
+        --
+        {{/if}}
     </td>
     <td>{{studio_max}}</td>
     <td>{{valore_gradi}}</td>
@@ -29,9 +41,13 @@
         </div>
     </td>
     <td>
+        {{#if has 'fixed_bonus'}}
+        <span class="input-mini uneditable-input"><strong>{{fixed_bonus}}</strong></span>
+        {{else}}
         <div class="control-group {{statusClass 'speciale2'}}">
             <input id="{{key}}-speciale2" class="input-mini" type="text" value="{{valueOf 'speciale2'}}" value-type="int">
         </div>
+        {{/if}}
     </td>
     <td><strong>{{totale}}</strong></td>
 </tr>

@@ -1,13 +1,3 @@
-var abilities = {
-    'conoscenza_metalli_rocce' : {
-        "attribute" : "IT",
-        "studio": 80,
-        "speciale_fisso": null,
-        "bonus_gradi": null,
-        "nome": "Conoscenza Metalli e Rocce"
-    }
-};
-
 var valueOf = function(ab, what) {
     if (!ab.char[ab.key])
         return 0;
@@ -18,7 +8,38 @@ var valueOf = function(ab, what) {
 };
 
 var getValoreGradi = function(ab) {
-    return (valueOf(ab, 'gradi5') * 5) + (valueOf(ab, 'gradi3') * 3) + valueOf(ab, 'gradi1');
+    // TODO bonus_gradi
+    var gradi5 =  valueOf(ab, 'gradi5');
+    if (_.isNull(ab.gradi5))
+        gradi5 = parentValue(ab, 'gradi5');
+    return (gradi5 * 5) + (valueOf(ab, 'gradi3') * 3) + valueOf(ab, 'gradi1');
+};
+
+var parentValue = function(ab, what) {
+    var key = what + "_parent";
+    var parent = ab[key];
+    if (!ab.char[parent])
+        return 0;
+    return ab.char[parent][what];
+};
+
+var totalValue = function(ab) {
+    var sp2 = valueOf(ab, 'speciale2');
+    if (ab.fixed_bonus)
+        sp2 = ab.fixed_bonus;
+    if (!ab.total)
+        return getValoreGradi(ab) + valueOf(ab, 'oggetto') + valueOf(ab, 'speciale1') + sp2;
+    var children = _.filter(abilities, function(a, key) {
+        if (a.gradi5_parent == ab.key) {
+            a.char = ab.char;
+            a.key = key;
+            return a;
+        }
+    });
+    var max = _.max(children, function(child) {
+        return totalValue(child);
+    });
+    return totalValue(max);
 };
 
 var isdirty = function(ab, what) {
@@ -38,18 +59,22 @@ var iserror = function(ab, what) {
 Template.ability.valore_gradi = function () {
     return getValoreGradi(this);
 };
+
 Template.ability.totale = function() {
-    return getValoreGradi(this) + valueOf(this, 'oggetto') + valueOf(this, 'speciale1') + valueOf(this, 'speciale2');
+    return totalValue(this);
 };
+
 Template.ability.studio_max = function() {
     if (this.studio) {
         return this.char.IN + this.studio;
     }
     return "";
 };
+
 Template.ability.valueOf = function(what) {
     return valueOf(this, what);
 };
+
 Template.ability.statusClass = function(what) {
     var dirty = isdirty(this, what);
     var error = isdirty(this, what);
@@ -60,3 +85,11 @@ Template.ability.statusClass = function(what) {
     return "";
 };
 
+Template.ability.has = function (what) {
+    if (this[what]) return true;
+    return false;
+};
+
+Template.ability.parent_value = function(what) {
+    return parentValue(this, what);
+};

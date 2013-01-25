@@ -90,7 +90,6 @@ Template.characters.ownerName = function(owner) {
 };
 Template.character404.character = function() { return Session.get('characterId'); };
 
-// Character
 var TC = Template.character;
 
 // Form Status
@@ -103,8 +102,6 @@ TC.rendered = function() {
   if (!tab)
       tab = "linkcaratteristiche";
 
-  console.log("Activating " + tab);
-  console.log($('#' + tab));
   $('#' + tab).tab("show");
 };
 
@@ -198,6 +195,7 @@ TC.sortedLingue = function () {
     return _.sortBy(Session.get('character').lingue,
                     function(lingua) { return -lingua.competenza; });
 };
+
 // Abilità
 TC.abilities = function () {
     var char = Session.get('character');
