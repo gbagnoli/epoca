@@ -99,6 +99,13 @@ TC.character = function() { return Session.get('character'); };
 TC.rendered = function() {
   var tooltips = $("[rel=tooltip]");
   if (tooltips.length) tooltips.tooltip();
+  var tab = Session.get('activeTab');
+  if (!tab)
+      tab = "linkcaratteristiche";
+
+  console.log("Activating " + tab);
+  console.log($('#' + tab));
+  $('#' + tab).tab("show");
 };
 
 TC.isActive = function (tab) {
@@ -207,6 +214,12 @@ Template.character.events({
         if (event.keyCode == '13' && event.target.id) {
             $('#' + event.target.id).blur();
         }
+    },
+    'click a.tablink': function(event) {
+        event.stopPropagation();
+        var anchor = event.target.id;
+        Session.set('activeTab', anchor);
+        $(event.target).tab("show");
     },
     'click #save': function(event) {
         if (Session.get('dirty') && !Session.get("errors")) {
