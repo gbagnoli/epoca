@@ -24,6 +24,10 @@ var parentValue = function(ab, what) {
 };
 
 var totalValue = function(ab) {
+    if (!ab) {
+        // WTF?
+        return 0;
+    }
     var sp2 = valueOf(ab, 'speciale2');
     if (ab.fixed_bonus)
         sp2 = ab.fixed_bonus;
