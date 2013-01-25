@@ -57,6 +57,17 @@ Template.characters.events({
             return;
         }
         // XXX: LOG!
+        var init_ab = {
+            "gradi5" : 0,
+            "gradi3" : 0,
+            "gradi1" : 0,
+            "oggetto": 0,
+            "speciale1": 0,
+            "speciale2": 0
+        };
+        _.each(abilities, function(ab, key) {
+            data[key] = _.clone(init_ab);
+        });
         Characters.insert(data);
         $('#newChar')[0].reset();
     },
