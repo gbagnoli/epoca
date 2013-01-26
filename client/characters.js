@@ -324,8 +324,10 @@ Template.character.events({
         });
         if (!error) {
             var char = Session.get('character');
+            var logData = _.clone(data);
+            logData['character'] = char.nome;
             Logs.insert({user: Meteor.user(), action: "Characters Update",
-                        content: {"add_lang": data}, date: new Date()});
+                        content: {"add / update lang": logData}, date: new Date()});
             Characters.update({"_id": char._id,
                               "lingue.nome": data['nome']},
                               {$pull: {'lingue': {"nome": data['nome'] }}});
@@ -342,8 +344,10 @@ Template.character.events({
         bootbox.confirm('Sicuro di voler rimuovere ' + lingua + "?",
                         function (result) {
                             if (result) {
+                                var logData = {"character": Session.get("character").nome,
+                                               "remove_lang": lingua};
                                 Logs.insert({user: Meteor.user(), action: "Characters Update",
-                                            content: {"remove_lang": lingua}, date: new Date()});
+                                            content: logData, date: new Date()});
                                 Characters.update({"_id": Session.get('character')._id,
                                                   "lingue.nome": lingua.nome},
                                                   {$pull: {'lingue': {"nome": lingua }}}
