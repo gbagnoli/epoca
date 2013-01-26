@@ -14,6 +14,10 @@ Template.log.displayContent = function () {
     return JSON.stringify(this.content, undefined, 2);
 };
 
+Template.log.prettyDate = function() {
+    return jQuery.timeago(this.date);
+};
+
 Template.log.events({
     'click .remove-log': function (event) {
         var node;
