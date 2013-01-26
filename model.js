@@ -17,8 +17,3 @@ var contactEmail = function (user) {
   return null;
 };
 
-var Character = Class.$extend({
-    __init__ : function(obj) {
-
-    },
-});
