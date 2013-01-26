@@ -1,4 +1,5 @@
 Characters = new Meteor.Collection('characters');
+Logs = new Meteor.Collection('logs');
 
 var displayName = function (user) {
   if (user.profile && user.profile.name)
@@ -16,3 +17,8 @@ var contactEmail = function (user) {
   return null;
 };
 
+var Character = Class.$extend({
+    __init__ : function(obj) {
+
+    },
+});

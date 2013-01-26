@@ -14,7 +14,8 @@ Meteor.Router.add({
         Session.set("dirty", null);
         Session.set('errors', null);
         return "character";
-    }
+    },
+    "/logs": "logs"
 });
 
 Meteor.Router.filters({

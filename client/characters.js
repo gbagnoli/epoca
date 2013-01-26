@@ -56,7 +56,8 @@ Template.characters.events({
             Session.set("error", "Personaggio già esistente");
             return;
         }
-        // XXX: LOG!
+        Logs.insert({user: Meteor.user(), action: "Add Character",
+                    content: data, date: new Date()});
         var init_ab = {
             "gradi5" : 0,
             "gradi3" : 0,
@@ -86,8 +87,10 @@ Template.characters.events({
         var charName = node.attr('character');
         bootbox.confirm("Sei sicuro di voler eliminare " + charName + "??", function(result) {
             if (result) {
-                // XXX LOG
-                Characters.remove({nome: charName});
+                var data = {nome: charName};
+                Logs.insert({user: Meteor.user(), action: "Characters Remove",
+                            content: data, date: new Date()});
+                Characters.remove(data);
             }
         });
     }
@@ -232,7 +235,10 @@ Template.character.events({
     },
     'click #save': function(event) {
         if (Session.get('dirty') && !Session.get("errors")) {
-            // XXX LOG
+            var logData = _.clone(Session.get("dirty"));
+            logData['character'] = Session.get('character').nome;
+            Logs.insert({user: Meteor.user(), action: "Characters Update",
+                        content: logData, date: new Date()});
             Characters.update(Session.get('character')._id, {$set: Session.get("dirty")});
         }
         Session.set('dirty', null);
@@ -318,7 +324,8 @@ Template.character.events({
         });
         if (!error) {
             var char = Session.get('character');
-            // XXX LOG!
+            Logs.insert({user: Meteor.user(), action: "Characters Update",
+                        content: {"add_lang": data}, date: new Date()});
             Characters.update({"_id": char._id,
                               "lingue.nome": data['nome']},
                               {$pull: {'lingue': {"nome": data['nome'] }}});
@@ -335,7 +342,8 @@ Template.character.events({
         bootbox.confirm('Sicuro di voler rimuovere ' + lingua + "?",
                         function (result) {
                             if (result) {
-                                // XXX LOG!
+                                Logs.insert({user: Meteor.user(), action: "Characters Update",
+                                            content: {"remove_lang": lingua}, date: new Date()});
                                 Characters.update({"_id": Session.get('character')._id,
                                                   "lingue.nome": lingua.nome},
                                                   {$pull: {'lingue': {"nome": lingua }}}
