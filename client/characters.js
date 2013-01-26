@@ -88,7 +88,7 @@ Template.characters.events({
         bootbox.confirm("Sei sicuro di voler eliminare " + charName + "??", function(result) {
             if (result) {
                 var data = {nome: charName};
-                Logs.insert({user: Meteor.user(), action: "Characters Remove",
+                Logs.insert({user: Meteor.user(), action: "Remove Character",
                             content: data, date: new Date()});
                 Characters.remove(data);
             }
@@ -237,7 +237,7 @@ Template.character.events({
         if (Session.get('dirty') && !Session.get("errors")) {
             var logData = _.clone(Session.get("dirty"));
             logData['character'] = Session.get('character').nome;
-            Logs.insert({user: Meteor.user(), action: "Characters Update",
+            Logs.insert({user: Meteor.user(), action: "Update Character",
                         content: logData, date: new Date()});
             Characters.update(Session.get('character')._id, {$set: Session.get("dirty")});
         }
@@ -326,7 +326,7 @@ Template.character.events({
             var char = Session.get('character');
             var logData = _.clone(data);
             logData['character'] = char.nome;
-            Logs.insert({user: Meteor.user(), action: "Characters Update",
+            Logs.insert({user: Meteor.user(), action: "Update Character",
                         content: {"add / update lang": logData}, date: new Date()});
             Characters.update({"_id": char._id,
                               "lingue.nome": data['nome']},
@@ -346,7 +346,7 @@ Template.character.events({
                             if (result) {
                                 var logData = {"character": Session.get("character").nome,
                                                "remove_lang": lingua};
-                                Logs.insert({user: Meteor.user(), action: "Characters Update",
+                                Logs.insert({user: Meteor.user(), action: "Update Character",
                                             content: logData, date: new Date()});
                                 Characters.update({"_id": Session.get('character')._id,
                                                   "lingue.nome": lingua.nome},
