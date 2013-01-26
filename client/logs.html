@@ -6,7 +6,11 @@
             <th>When</th>
             <th>Action</th>
             <th>Content</th>
-            <th></th>
+            <th>
+                <button {{#unless anyLog}}disabled{{/unless}} rel="tooltip" title="Rimuovi tutti i log" id="remove-all-logs" class="btn btn-mini btn-inverse pull-right">
+                    <i class="icon-white icon-remove"></i>
+                </button>
+            </th>
     </thead>
     <tbody>
         {{#each logs}}
@@ -23,7 +27,7 @@
     <td>{{action}}</td>
     <td>{{displayContent}}</td>
     <td>
-        <button rel="tooltip" title="Rimuovi" log="{{_id}}" class="btn btn-mini btn-inverse remove-log">
+        <button rel="tooltip" title="Rimuovi" log="{{_id}}" class="btn btn-mini btn-inverse remove-log pull-right">
             <i class="icon-white icon-remove"></i>
         </button>
     </td>
