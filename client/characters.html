@@ -57,20 +57,6 @@
 
 <template name="character">
     {{#with character}}
-    {{!TABS}}
-    <div class="pull-right">
-        <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini mainbtn" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
-        <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini mainbtn" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
-    </div>
-    <ul class="nav nav-tabs" id="tabs">
-        <li class="mainbtn">
-        <h2 class="pull-left mainbtn">{{nome}}</h2>
-        </li>
-        <li><a id="linkcaratteristiche" class="tablink" href="#tabcaratteristiche">Caratteristiche</a></li>
-        <li><a id="linkabilità" class="tablink" href="#tababilita">Abilità</a><li>
-        <li><a id="linkcombattimento" class="tablink" href="#tabcombattimento">Combattimento</a><li>
-        <li><a id="linkoggetti" class="tablink" href="#taboggetti">Oggetti</a><li>
-    </ul>
     <div class="tab-content">
         <div class="tab-pane" id="tabcaratteristiche">
             <div class="row-fluid">

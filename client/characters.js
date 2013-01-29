@@ -112,18 +112,6 @@ TC.character = function() { return Session.get('character'); };
 TC.rendered = function() {
   var tooltips = $("[rel=tooltip]");
   if (tooltips.length) tooltips.tooltip();
-  var tab = Session.get('activeTab');
-  if (!tab)
-      tab = "linkcaratteristiche";
-
-  $('#' + tab).tab("show");
-};
-
-TC.isActive = function (tab) {
-    var current = Session.get('currentTab');
-    if (tab == current)
-        return true;
-    return false;
 };
 
 TC.dirty = function() {
@@ -226,50 +214,6 @@ Template.character.events({
         if (event.keyCode == '13' && event.target.id) {
             $('#' + event.target.id).blur();
         }
-    },
-    'click a.tablink': function(event) {
-        event.stopPropagation();
-        var anchor = event.target.id;
-        Session.set('activeTab', anchor);
-        $(event.target).tab("show");
-    },
-    'click #save': function(event) {
-        if (Session.get('dirty') && !Session.get("errors")) {
-            var logData = _.clone(Session.get("dirty"));
-            logData['character'] = Session.get('character').nome;
-            Logs.insert({user: Meteor.user(), action: "Update Character",
-                        content: logData, date: new Date()});
-            Characters.update(Session.get('character')._id, {$set: Session.get("dirty")});
-        }
-        Session.set('dirty', null);
-    },
-    'click #reset': function(event) {
-        console.log('Aborting changes');
-        var clear = function(id) {
-            var jfield = $('#' + id);
-            // This sets the _original_ value!
-            jfield.val(jfield[0].attributes['value'].value);
-        };
-
-        var clearObject = function(obj) {
-            if (!obj)
-                return;
-            _.map(obj, function(elem, key) {
-                if (_.isObject(elem)) {
-                    _.map(elem, function(e, k) {
-                        clear(key + "-" + k);
-                    });
-                } else {
-                    clear(key);
-                }
-            });
-        };
-        var errors = Session.get('errors');
-        var dirty = Session.get('dirty');
-        clearObject(errors);
-        clearObject(dirty);
-        Session.set('dirty', null);
-        Session.set('errors', null);
     },
     'click #newLangButton': function(event) {
         $('#langFormLabel').html("Nuova Lingua");

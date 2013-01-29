@@ -16,9 +16,34 @@
           <div class="container">
               <a class="brand" href="/">Epoca</a>
               <ul class="nav">
-                  <li class="{{isPageActive 'root'}}" ><a href="/">Home</a></li>
-                  <li class="{{isPageActive 'characters'}}"><a href="/characters">Personaggi</a></li>
-                  <li class="{{isPageActive 'logs'}}"><a href="/logs">Logs</a></li>
+                  <li class="{{activeClass 'root'}}" ><a href="/">Home</a></li>
+                  <li class="divider-vertical"></li>
+                  <li class="{{activeClass 'characters'}}">
+                      <a id="dropchar" href="/characters">Personaggi</a>
+                  </li>
+                  <li class="divider-vertical"></li>
+                  <li class="{{activeClass 'logs'}}"><a href="/logs">Logs</a></li>
+                  {{#if isPageActive 'character'}}
+                  <li class="divider-vertical"></li>
+                  <li  class="dropdown">
+                  <a href="#" id="dropchar" role="button" class="dropdown-toggle" data-toggle="dropdown"><strong>{{charName}}</strong> <b class="caret"></b></a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="dropchar">
+                          <li><a id="linkcaratteristiche" class="tablink" href="#tabcaratteristiche">Caratteristiche</a></li>
+                          <li><a id="linkabilità" class="tablink" href="#tababilita">Abilità</a></li>
+                          <li><a id="linkcombattimento" class="tablink" href="#tabcombattimento">Combattimento</a></li>
+                          <li><a id="linkoggetti" class="tablink" href="#taboggetti">Oggetti</a></li>
+                      </ul>
+                  </li>
+                  <li class="divider-vertical"></li>
+                  <li>
+                    <button id="save" class="btn {{#if submittable}}btn-success{{/if}} btn-mini mainbtn" {{#unless submittable}}disabled{{/unless}}><i class="icon-white icon-ok"></i> Salva</button>
+                  </li>
+                  <li>
+                    <button id="reset" class="btn {{#if changed}}btn-danger{{/if}} btn-mini mainbtn" {{#unless changed}}disabled{{/unless}}><i class="icon-white icon-remove"></i> Annulla</button>
+                  </li>
+                  {{/if}}
+              </ul>
+              <ul class="nav pull-right">
                   <li>{{loginButtons}}</li>
               </ul>
           </div>
