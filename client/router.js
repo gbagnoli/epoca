@@ -13,7 +13,9 @@ Meteor.Router.add({
         Session.set("character", char);
         Session.set("dirty", null);
         Session.set('errors', null);
-        Session.set('activeTab', null);
+        var tab = Session.get("activeTab");
+        if (!tab)
+            Session.set('activeTab', "linkcaratteristiche");
         return "character";
     },
     "/logs": "logs"
@@ -54,18 +56,23 @@ Template.navbar.submittable = Template.character.submittable;
 Template.navbar.changed = Template.character.changed;
 
 Template.navbar.rendered = function() {
-  var tab = Session.get('activeTab');
-  if (!tab)
-      tab = "linkcaratteristiche";
-  $('#' + tab).tab("show");
+    var tab = Session.get('activeTab');
+    if (!tab) {
+        console.log("null tab?");
+        return;
+    }
+    $("a.tablink").click(function (e) {
+        e.preventDefault();
+        $(this).tab("show");
+        $(".dropdown-toggle").dropdown('toggle');
+    });
+    $('a.tablink').on('shown', function(e) {
+        Session.set('activeTab', this.id);
+    });
+    $('#' + tab).tab("show");
 };
 
 Template.navbar.events({
-    'click a.tablink': function(event) {
-        var anchor = event.target.id;
-        Session.set('activeTab', anchor);
-        $(event.target).tab("show");
-    },
     'click #save': function(event) {
         if (Session.get('dirty') && !Session.get("errors")) {
             var logData = _.clone(Session.get("dirty"));
@@ -105,3 +112,4 @@ Template.navbar.events({
         Session.set('errors', null);
     }
 });
+
